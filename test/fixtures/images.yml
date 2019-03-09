@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  path: MyString
+  study_case: one
+
+two:
+  path: MyString
+  study_case: two
