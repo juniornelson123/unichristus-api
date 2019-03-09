@@ -1,2 +1,2 @@
-json.extract! word, :id, :name, :kind, :study_case_id, :user_id, :created_at, :updated_at
-json.url word_url(word, format: :json)
+json.extract! word, :id, :name, :kind, :study_case, :user, :created_at, :updated_at
+json.url api_word_url(word, format: :json)

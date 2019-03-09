@@ -19,18 +19,18 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show group" do
-    get group_url(@group), as: :json
+    get api_group_url(@group), as: :json
     assert_response :success
   end
 
   test "should update group" do
-    patch group_url(@group), params: { group: { class_room_id: @group.class_room_id, description: @group.description, name: @group.name, study_case_id: @group.study_case_id, user_id: @group.user_id } }, as: :json
+    patch api_group_url(@group), params: { group: { class_room_id: @group.class_room_id, description: @group.description, name: @group.name, study_case_id: @group.study_case_id, user_id: @group.user_id } }, as: :json
     assert_response 200
   end
 
   test "should destroy group" do
     assert_difference('Group.count', -1) do
-      delete group_url(@group), as: :json
+      delete api_group_url(@group), as: :json
     end
 
     assert_response 204

@@ -1,1 +1,1 @@
-json.array! @class_rooms, partial: 'class_rooms/class_room', as: :class_room
+json.array! @class_rooms, partial: 'api/class_rooms/class_room', as: :class_room

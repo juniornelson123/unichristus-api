@@ -4,7 +4,7 @@ class Api::ClassRoomsController < ApplicationController
   # GET /class_rooms
   # GET /class_rooms.json
   def index
-    @class_rooms = ClassRoom.all
+    @class_rooms = ClassRoom.where(user_id: current_user.id).order(created_at: :desc).page params[:page]
   end
 
   # GET /class_rooms/1
@@ -12,11 +12,27 @@ class Api::ClassRoomsController < ApplicationController
   def show
   end
 
+  def add_student
+    @class_room_user = ClassRoomsUser.new(class_room_user_params)
+
+    if @class_room_user.save
+      render json: @class_room_user, status: :created
+    else
+      render json: @class_room_user.errors, status: :unprocessable_entity
+    end
+  end
+
+  def remove_student
+    @class_room_user = ClassRoomsUser.find params[:id]
+
+    @class_room_user.destroy
+  end
+
   # POST /class_rooms
   # POST /class_rooms.json
   def create
     @class_room = ClassRoom.new(class_room_params)
-
+    @class_room.user_id = current_user.id
     if @class_room.save
       render :show, status: :created, location: @class_room
     else

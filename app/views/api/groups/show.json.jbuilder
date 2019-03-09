@@ -1,1 +1,1 @@
-json.partial! "groups/group", group: @group
+json.partial! "api/groups/group", group: @group

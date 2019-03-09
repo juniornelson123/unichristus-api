@@ -19,18 +19,18 @@ class ClassRoomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show class_room" do
-    get class_room_url(@class_room), as: :json
+    get api_class_room_url(@class_room), as: :json
     assert_response :success
   end
 
   test "should update class_room" do
-    patch class_room_url(@class_room), params: { class_room: { description: @class_room.description, name: @class_room.name, user_id: @class_room.user_id } }, as: :json
+    patch api_class_room_url(@class_room), params: { class_room: { description: @class_room.description, name: @class_room.name, user_id: @class_room.user_id } }, as: :json
     assert_response 200
   end
 
   test "should destroy class_room" do
     assert_difference('ClassRoom.count', -1) do
-      delete class_room_url(@class_room), as: :json
+      delete api_class_room_url(@class_room), as: :json
     end
 
     assert_response 204

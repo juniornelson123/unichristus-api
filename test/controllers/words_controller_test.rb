@@ -19,18 +19,18 @@ class WordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show word" do
-    get word_url(@word), as: :json
+    get api_word_url(@word), as: :json
     assert_response :success
   end
 
   test "should update word" do
-    patch word_url(@word), params: { word: { kind: @word.kind, name: @word.name, study_case_id: @word.study_case_id, user_id: @word.user_id } }, as: :json
+    patch api_word_url(@word), params: { word: { kind: @word.kind, name: @word.name, study_case_id: @word.study_case_id, user_id: @word.user_id } }, as: :json
     assert_response 200
   end
 
   test "should destroy word" do
     assert_difference('Word.count', -1) do
-      delete word_url(@word), as: :json
+      delete api_word_url(@word), as: :json
     end
 
     assert_response 204

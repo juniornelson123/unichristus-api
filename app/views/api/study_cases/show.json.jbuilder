@@ -1,1 +1,1 @@
-json.partial! "study_cases/study_case", study_case: @study_case
+json.partial! "api/study_cases/study_case", study_case: @study_case

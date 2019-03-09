@@ -4,7 +4,11 @@ class Api::StudyCasesController < ApplicationController
   # GET /study_cases
   # GET /study_cases.json
   def index
-    @study_cases = StudyCase.all
+    if params[:class_room_id].present?
+      @study_cases = StudyCase.where(class_room_id: params[:class_room_id]).order(created_at: :desc).page params[:page]
+    else
+      @study_cases = StudyCase.order(created_at: :desc).page params[:page]
+    end
   end
 
   # GET /study_cases/1
@@ -18,7 +22,7 @@ class Api::StudyCasesController < ApplicationController
     @study_case = StudyCase.new(study_case_params)
 
     if @study_case.save
-      render :show, status: :created, location: @study_case
+      render :show, status: :created
     else
       render json: @study_case.errors, status: :unprocessable_entity
     end
@@ -28,7 +32,7 @@ class Api::StudyCasesController < ApplicationController
   # PATCH/PUT /study_cases/1.json
   def update
     if @study_case.update(study_case_params)
-      render :show, status: :ok, location: @study_case
+      render :show, status: :ok
     else
       render json: @study_case.errors, status: :unprocessable_entity
     end

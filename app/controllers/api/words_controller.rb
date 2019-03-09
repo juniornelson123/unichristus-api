@@ -4,7 +4,11 @@ class Api::WordsController < ApplicationController
   # GET /words
   # GET /words.json
   def index
-    @words = Word.all
+    if params[:kind].present?
+      @words = Word.where(kind: params[:kind]).order(created_at: :desc).page params[:page]
+    else
+      @words = Word.order(created_at: :desc).page params[:page]
+    end
   end
 
   # GET /words/1
@@ -18,7 +22,7 @@ class Api::WordsController < ApplicationController
     @word = Word.new(word_params)
 
     if @word.save
-      render :show, status: :created, location: @word
+      render :show, status: :created
     else
       render json: @word.errors, status: :unprocessable_entity
     end
@@ -28,7 +32,7 @@ class Api::WordsController < ApplicationController
   # PATCH/PUT /words/1.json
   def update
     if @word.update(word_params)
-      render :show, status: :ok, location: @word
+      render :show, status: :ok
     else
       render json: @word.errors, status: :unprocessable_entity
     end

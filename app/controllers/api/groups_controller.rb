@@ -4,12 +4,32 @@ class Api::GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all
+    if params[:class_room_id].present?
+      @groups = Group.where(class_room_id: params[:class_room_id]).order(created_at: :desc).page params[:page]
+    else
+      @groups = Group.order(created_at: :desc).page params[:page]
+    end
   end
 
   # GET /groups/1
   # GET /groups/1.json
   def show
+  end
+
+  def add_student
+    @group_user = GroupsUser.new(group_user_params)
+
+    if @group_user.save
+      render json: @group_user, status: :created
+    else
+      render json: @group_user.errors, status: :unprocessable_entity
+    end
+  end
+
+  def remove_student
+    @group_user = GroupsUser.find params[:id]
+
+    @group_user.destroy
   end
 
   # POST /groups
@@ -18,7 +38,7 @@ class Api::GroupsController < ApplicationController
     @group = Group.new(group_params)
 
     if @group.save
-      render :show, status: :created, location: @group
+      render :show, status: :created
     else
       render json: @group.errors, status: :unprocessable_entity
     end
@@ -28,7 +48,7 @@ class Api::GroupsController < ApplicationController
   # PATCH/PUT /groups/1.json
   def update
     if @group.update(group_params)
-      render :show, status: :ok, location: @group
+      render :show, status: :ok
     else
       render json: @group.errors, status: :unprocessable_entity
     end
