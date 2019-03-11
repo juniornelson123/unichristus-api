@@ -4,10 +4,11 @@ class Api::GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
+    @class_rooms = ClassRoom.where(user_id: current_user.id).pluck(:id)
     if params[:class_room_id].present?
       @groups = Group.where(class_room_id: params[:class_room_id]).order(created_at: :desc).page params[:page]
     else
-      @groups = Group.order(created_at: :desc).page params[:page]
+      @groups = Group.where("groups.class_room_id in (?)", @class_rooms).order(created_at: :desc).page params[:page]
     end
   end
 
@@ -69,5 +70,9 @@ class Api::GroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
       params.require(:group).permit!
+    end
+
+    def group_user_params
+      params.require(:group_user).permit!
     end
 end

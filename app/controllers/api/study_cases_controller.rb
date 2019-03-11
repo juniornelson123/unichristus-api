@@ -4,10 +4,11 @@ class Api::StudyCasesController < ApplicationController
   # GET /study_cases
   # GET /study_cases.json
   def index
+    @class_rooms = ClassRoom.where(user_id: current_user.id).pluck(:id)
     if params[:class_room_id].present?
       @study_cases = StudyCase.where(class_room_id: params[:class_room_id]).order(created_at: :desc).page params[:page]
     else
-      @study_cases = StudyCase.order(created_at: :desc).page params[:page]
+      @study_cases = StudyCase.where("study_cases.class_room_id in (?)", @class_rooms).order(created_at: :desc).page params[:page]
     end
   end
 

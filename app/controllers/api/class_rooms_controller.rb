@@ -66,4 +66,8 @@ class Api::ClassRoomsController < ApplicationController
     def class_room_params
       params.require(:class_room).permit!
     end
+
+    def class_room_user_params
+      params.require(:class_room_user).permit!
+    end
 end

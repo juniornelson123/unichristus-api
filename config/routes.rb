@@ -14,5 +14,7 @@ Rails.application.routes.draw do
 
     post 'add_student/group' => 'groups#add_student'
     delete 'add_student/group/:id' => 'groups#remove_student'
+
+    get 'teacher/students' => 'users#students'
   end
 end
