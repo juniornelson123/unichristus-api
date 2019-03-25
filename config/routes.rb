@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     post '/sign_in' => 'sessions#sign_in'
     post '/sign_up' => 'sessions#sign_up'
 
-    resources :users, only: [:index]
+    resources :users, only: [:index, :show, :update, :destroy]
     resources :words
     resources :groups
     resources :study_cases

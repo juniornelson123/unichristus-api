@@ -17,6 +17,15 @@ class Api::GroupsController < ApplicationController
   def show
   end
 
+  def separe_groups
+    @count = params[:count] || 8
+
+    @class_rooms = ClassRoom.where(user_id: current_user.id).pluck(:id)
+    @users = User.joins(:class_rooms).where("class_rooms_users.class_room_id in (?) and users.role = ?", @class_rooms, 0).page params[:page]
+
+    
+  end
+
   def add_student
     @group_user = GroupsUser.new(group_user_params)
 

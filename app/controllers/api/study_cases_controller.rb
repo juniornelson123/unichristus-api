@@ -5,6 +5,10 @@ class Api::StudyCasesController < ApplicationController
   # GET /study_cases.json
   def index
     @class_rooms = ClassRoom.where(user_id: current_user.id).pluck(:id)
+    if params[:is_student].present?
+      @class_rooms = current_user.class_rooms.pluck(:id)
+    end
+
     if params[:class_room_id].present?
       @study_cases = StudyCase.where(class_room_id: params[:class_room_id]).order(created_at: :desc).page params[:page]
     else
