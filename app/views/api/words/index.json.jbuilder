@@ -18,25 +18,14 @@ json.problems @problems do |problem|
   json.updated_at problem.updated_at
 end
 
-
-json.problems @problems do |problem|
-  json.id problem.id
-  json.name problem.name
-  json.kind problem.kind
-  json.study_case problem.study_case_id
-  json.user problem.user_id
-  json.created_at problem.created_at
-  json.updated_at problem.updated_at
-end
-
-json.braistorms @braistorms do |braistorm|
-  json.id braistorm.id
-  json.name braistorm.name
-  json.kind braistorm.kind
-  json.study_case braistorm.study_case_id
-  json.user braistorm.user_id
-  json.created_at braistorm.created_at
-  json.updated_at braistorm.updated_at
+json.brainstorms @brainstorms do |brainstorm|
+  json.id brainstorm.id
+  json.name brainstorm.name
+  json.kind brainstorm.kind
+  json.study_case brainstorm.study_case_id
+  json.user brainstorm.user_id
+  json.created_at brainstorm.created_at
+  json.updated_at brainstorm.updated_at
 end
 json.solutions @solutions do |solution|
   json.id solution.id

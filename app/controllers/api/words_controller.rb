@@ -7,7 +7,7 @@ class Api::WordsController < ApplicationController
     if params[:study_case].present?
       @words = Word.where(kind: 0, study_case_id: params[:study_case], user_id: current_user.id).order(created_at: :desc).page params[:page]
       @problems = Word.where(kind: 1, study_case_id: params[:study_case], user_id: current_user.id).order(created_at: :desc).page params[:page]
-      @braistorms = Word.where(kind: 2, study_case_id: params[:study_case], user_id: current_user.id).order(created_at: :desc).page params[:page]
+      @brainstorms = Word.where(kind: 2, study_case_id: params[:study_case], user_id: current_user.id).order(created_at: :desc).page params[:page]
       @solutions = Word.where(kind: 3, study_case_id: params[:study_case], user_id: current_user.id).order(created_at: :desc).page params[:page]
       @diagnostics = Word.where(kind: 4, study_case_id: params[:study_case], user_id: current_user.id).order(created_at: :desc).page params[:page]
       @knows = Word.where(kind: 5, study_case_id: params[:study_case], user_id: current_user.id).order(created_at: :desc).page params[:page]
@@ -26,8 +26,8 @@ class Api::WordsController < ApplicationController
   # POST /words.json
   def create
     @word = Word.new(word_params)
-
-    if @word.save
+    @word.user_id = current_user.id
+    if @word.save!
       render :show, status: :created
     else
       render json: @word.errors, status: :unprocessable_entity
