@@ -17,6 +17,18 @@ class Api::WordsController < ApplicationController
     end
   end
 
+  def index_teacher
+    @words = Word.where(kind: 0, study_case_id: params[:study_case]).order(created_at: :desc).page params[:page]
+    @problems = Word.where(kind: 1, study_case_id: params[:study_case]).order(created_at: :desc).page params[:page]
+    @brainstorms = Word.where(kind: 2, study_case_id: params[:study_case]).order(created_at: :desc).page params[:page]
+    @solutions = Word.where(kind: 3, study_case_id: params[:study_case]).order(created_at: :desc).page params[:page]
+    @diagnostics = Word.where(kind: 4, study_case_id: params[:study_case]).order(created_at: :desc).page params[:page]
+    @knows = Word.where(kind: 5, study_case_id: params[:study_case]).order(created_at: :desc).page params[:page]
+    @knowledges = Word.where(kind: 6, study_case_id: params[:study_case]).order(created_at: :desc).page params[:page]
+
+    render :index
+  end
+
   # GET /words/1
   # GET /words/1.json
   def show

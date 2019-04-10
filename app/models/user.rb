@@ -12,6 +12,7 @@ class User < ApplicationRecord
   
   has_many :my_class_rooms, foreign_key: "user_id", class_name: "ClassRoom"
   has_many :words
+  has_many :mind_maps
   
   has_one :group
 

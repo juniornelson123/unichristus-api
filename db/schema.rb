@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_09_221513) do
+ActiveRecord::Schema.define(version: 2019_04_02_143310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,12 +63,24 @@ ActiveRecord::Schema.define(version: 2019_03_09_221513) do
     t.index ["study_case_id"], name: "index_images_on_study_case_id"
   end
 
+  create_table "mind_maps", force: :cascade do |t|
+    t.string "file"
+    t.bigint "user_id"
+    t.bigint "study_case_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["study_case_id"], name: "index_mind_maps_on_study_case_id"
+    t.index ["user_id"], name: "index_mind_maps_on_user_id"
+  end
+
   create_table "study_cases", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.bigint "class_room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image"
+    t.string "video"
     t.index ["class_room_id"], name: "index_study_cases_on_class_room_id"
   end
 
@@ -114,6 +126,8 @@ ActiveRecord::Schema.define(version: 2019_03_09_221513) do
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
   add_foreign_key "images", "study_cases"
+  add_foreign_key "mind_maps", "study_cases"
+  add_foreign_key "mind_maps", "users"
   add_foreign_key "study_cases", "class_rooms"
   add_foreign_key "videos", "study_cases"
   add_foreign_key "words", "study_cases"
