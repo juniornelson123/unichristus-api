@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_02_143310) do
+ActiveRecord::Schema.define(version: 2019_04_10_211801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,26 @@ ActiveRecord::Schema.define(version: 2019_04_02_143310) do
     t.index ["user_id"], name: "index_class_rooms_users_on_user_id"
   end
 
+  create_table "evaluations", force: :cascade do |t|
+    t.float "value"
+    t.bigint "study_case_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["study_case_id"], name: "index_evaluations_on_study_case_id"
+    t.index ["user_id"], name: "index_evaluations_on_user_id"
+  end
+
+  create_table "exercises", force: :cascade do |t|
+    t.string "file"
+    t.string "title"
+    t.text "description"
+    t.bigint "study_case_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["study_case_id"], name: "index_exercises_on_study_case_id"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -51,6 +71,7 @@ ActiveRecord::Schema.define(version: 2019_04_02_143310) do
     t.bigint "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "leader"
     t.index ["group_id"], name: "index_groups_users_on_group_id"
     t.index ["user_id"], name: "index_groups_users_on_user_id"
   end
@@ -71,6 +92,14 @@ ActiveRecord::Schema.define(version: 2019_04_02_143310) do
     t.datetime "updated_at", null: false
     t.index ["study_case_id"], name: "index_mind_maps_on_study_case_id"
     t.index ["user_id"], name: "index_mind_maps_on_user_id"
+  end
+
+  create_table "steps", force: :cascade do |t|
+    t.string "name"
+    t.bigint "study_case_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["study_case_id"], name: "index_steps_on_study_case_id"
   end
 
   create_table "study_cases", force: :cascade do |t|
@@ -120,6 +149,9 @@ ActiveRecord::Schema.define(version: 2019_04_02_143310) do
   add_foreign_key "class_rooms", "users"
   add_foreign_key "class_rooms_users", "class_rooms"
   add_foreign_key "class_rooms_users", "users"
+  add_foreign_key "evaluations", "study_cases"
+  add_foreign_key "evaluations", "users"
+  add_foreign_key "exercises", "study_cases"
   add_foreign_key "groups", "class_rooms"
   add_foreign_key "groups", "study_cases"
   add_foreign_key "groups", "users"
@@ -128,6 +160,7 @@ ActiveRecord::Schema.define(version: 2019_04_02_143310) do
   add_foreign_key "images", "study_cases"
   add_foreign_key "mind_maps", "study_cases"
   add_foreign_key "mind_maps", "users"
+  add_foreign_key "steps", "study_cases"
   add_foreign_key "study_cases", "class_rooms"
   add_foreign_key "videos", "study_cases"
   add_foreign_key "words", "study_cases"

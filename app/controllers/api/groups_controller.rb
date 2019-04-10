@@ -17,13 +17,34 @@ class Api::GroupsController < ApplicationController
   def show
   end
 
+  def set_leader
+    @user = GroupUser.find_by(user_id: params[:user_id], group_id: params[:group_id])
+  end
+
   def separe_groups
-    @count = params[:count] || 8
+    @limit = params[:count] || 8
+    array_users = []
+    count = 0
+    group = 1
 
-    @class_rooms = ClassRoom.where(user_id: current_user.id).pluck(:id)
-    @users = User.joins(:class_rooms).where("class_rooms_users.class_room_id in (?) and users.role = ?", @class_rooms, 0).page params[:page]
-
+    @class_room_id = params[:class_room_id]
+    @users = User.joins(:class_rooms).where("class_rooms_users.class_room_id in (?) and users.role = ?", @class_room_id, 0)
     
+    @user = User.create(name: "Grupo #{group}", email: "grupo#{group}@email.com", password: "grupo1", role: 2)
+    @new_group = Group.create(name: "Grupo #{group}", description: "Grupo #{group}", user_id: @user.id, class_room_id: class_room_id)
+    
+    @users.each_with_index do |user, index|
+      count = count + 1
+      
+      array_users << user
+      if count >= @limit
+        count = 0
+        @user = User.create(name: "Grupo #{group}", email: "grupo#{group}@email.com", password: "grupo1", role: 2)
+        @new_group = Group.create(name: "Grupo #{group}", description: "Grupo #{group}", user_id: @user.id, class_room_id: class_room_id)
+      end
+    end
+    
+    render json: { success: true }
   end
 
   def add_student

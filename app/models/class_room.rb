@@ -3,7 +3,7 @@ class ClassRoom < ApplicationRecord
 
   has_and_belongs_to_many :users
   
-  has_many :study_cases
+  has_many :study_cases, dependent: :destroy
 
   belongs_to :user
 

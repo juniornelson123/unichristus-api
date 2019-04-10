@@ -11,8 +11,9 @@ class User < ApplicationRecord
   has_and_belongs_to_many :groups    
   
   has_many :my_class_rooms, foreign_key: "user_id", class_name: "ClassRoom"
-  has_many :words
-  has_many :mind_maps
+  has_many :words, dependent: :destroy
+  has_many :mind_maps, dependent: :destroy
+  has_many :evaluations, dependent: :destroy
   
   has_one :group
 
