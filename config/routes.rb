@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  resources :steps
-  resources :exercises
-  resources :evaluations
   namespace :api do
     post '/sign_in' => 'sessions#sign_in'
     post '/sign_up' => 'sessions#sign_up'
@@ -12,6 +9,9 @@ Rails.application.routes.draw do
     resources :study_cases
     resources :class_rooms
     resources :mind_maps
+    resources :steps
+    resources :exercises
+    resources :evaluations
 
     post 'add_student/class_room' => 'class_rooms#add_student'
     delete 'add_student/class_room/:id' => 'class_rooms#remove_student'

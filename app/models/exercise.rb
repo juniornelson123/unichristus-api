@@ -1,3 +1,3 @@
 class Exercise < ApplicationRecord
-  belongs_to :study_case
+  belongs_to :class_room
 end

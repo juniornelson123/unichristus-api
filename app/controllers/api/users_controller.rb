@@ -9,8 +9,12 @@ class Api::UsersController < ApplicationController
   end
 
   def students
-    @class_rooms = ClassRoom.where(user_id: current_user.id).pluck(:id)
-    @users = User.joins(:class_rooms).where("class_rooms_users.class_room_id in (?) and users.role = ?", @class_rooms, 0).page params[:page]
+    if params[:class_rooms].present?
+      @users = User.joins(:class_rooms).where("class_rooms_users.class_room_id in (?) and users.role = ?", params[:class_room_id], 0).page params[:page]
+    else
+      @class_rooms = ClassRoom.where(user_id: current_user.id).pluck(:id)
+      @users = User.joins(:class_rooms).where("class_rooms_users.class_room_id in (?) and users.role = ?", @class_rooms, 0).page params[:page]
+    end
   end
 
   def update

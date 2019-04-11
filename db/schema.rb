@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_211801) do
+ActiveRecord::Schema.define(version: 2019_04_11_135921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,10 +47,9 @@ ActiveRecord::Schema.define(version: 2019_04_10_211801) do
     t.string "file"
     t.string "title"
     t.text "description"
-    t.bigint "study_case_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["study_case_id"], name: "index_exercises_on_study_case_id"
+    t.integer "class_room_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -151,7 +150,6 @@ ActiveRecord::Schema.define(version: 2019_04_10_211801) do
   add_foreign_key "class_rooms_users", "users"
   add_foreign_key "evaluations", "study_cases"
   add_foreign_key "evaluations", "users"
-  add_foreign_key "exercises", "study_cases"
   add_foreign_key "groups", "class_rooms"
   add_foreign_key "groups", "study_cases"
   add_foreign_key "groups", "users"

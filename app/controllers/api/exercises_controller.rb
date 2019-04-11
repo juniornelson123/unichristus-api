@@ -4,7 +4,7 @@ class Api::ExercisesController < ApplicationController
   # GET /exercises
   # GET /exercises.json
   def index
-    @exercises = Exercise.order(created_at: :desc).page params[:page]
+    @exercises = Exercise.where(class_room_id: params[:class_room_id]).order(created_at: :desc).page params[:page]
   end
 
   # GET /exercises/1
@@ -48,6 +48,6 @@ class Api::ExercisesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def exercise_params
-      params.require(:exercise).permit(:file, :title, :description, :study_case_id)
+      params.require(:exercise).permit(:file, :title, :description, :class_room_id)
     end
 end
