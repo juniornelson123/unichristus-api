@@ -16,6 +16,14 @@ class Api::StudyCasesController < ApplicationController
     end
   end
 
+  def get_my_study_cases
+    @class_rooms = User.find(params[:id]).class_rooms.pluck(:id)
+
+    @study_cases = StudyCase.where("study_cases.class_room_id in (?)", @class_rooms).order(created_at: :desc).page params[:page]
+
+    render :index
+  end
+
   # GET /study_cases/1
   # GET /study_cases/1.json
   def show

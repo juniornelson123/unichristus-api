@@ -4,10 +4,19 @@ class Api::EvaluationsController < ApplicationController
   # GET /evaluations
   # GET /evaluations.json
   def index
-    @evaluations = Evaluation.where(user_id: params[:user_id], study_case_id: params[:study_case_id]).order(created_at: :desc).page params[:page]
+    
+    @evaluation = Evaluation.find_by(user_id: params[:user_id], study_case_id: params[:study_case_id])
+
+    if @evaluation.present?
+      render :show
+    else
+      render json: nil
+    end
+      
   end
   
   def get_my_evaluation
+    
     @evaluation = Evaluation.find_by(user_id: current_user.id, study_case_id: params[:study_case_id])
 
     render :show

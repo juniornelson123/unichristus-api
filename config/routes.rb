@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     resources :exercises
     resources :evaluations
 
+    get 'study_cases/students/:id' => 'study_cases#get_my_study_cases'
+
     post 'add_student/class_room' => 'class_rooms#add_student'
     delete 'add_student/class_room/:id' => 'class_rooms#remove_student'
 
