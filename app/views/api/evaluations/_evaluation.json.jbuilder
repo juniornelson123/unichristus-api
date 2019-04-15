@@ -1,2 +1,6 @@
-json.extract! evaluation, :id, :value, :user, :study_case, :study_case_id, :user_id, :created_at, :updated_at
-json.url api_evaluation_url(evaluation, format: :json)
+if evaluation.present?
+  json.extract! evaluation, :id, :value, :user, :study_case, :study_case_id, :user_id, :created_at, :updated_at
+  json.url api_evaluation_url(evaluation, format: :json)
+else
+  json.evaluation nil
+end
