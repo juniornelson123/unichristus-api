@@ -131,10 +131,10 @@ task :deploy => :environment do
     # invoke :clean
 
 
-    to :launch do
-      invoke :'puma:hard_restart'
-      # invoke :'sidekiq:restart'
-    end
+    # to :launch do
+    #   invoke :'puma:hard_restart'
+    #   # invoke :'sidekiq:restart'
+    # end
   end
 
   # you can use `run :local` to run tasks on local machine before of after the deploy scripts
