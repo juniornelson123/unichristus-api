@@ -38,7 +38,7 @@ module UnichristusApi
     # Skip views, helpers and assets when generating a new resource.
 
     config.autoload_paths << Rails.root.join('lib')
-
+    config.eager_load_paths << Rails.root.join("lib")
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
