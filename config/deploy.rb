@@ -28,7 +28,7 @@ set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log', 'tmp', '
 
 task :environment do
   # invoke :'rvm:use[ruby-2.4.1@default]'
-  # command %{source ~/.rvm/scripts/rvm}
+  command %{source ~/.rvm/scripts/rvm}
   # invoke :'rvm:use', 'ruby-2.4.1@default'
 end
 
@@ -99,20 +99,20 @@ end
 # kill -9 $(cat /var/run/unichristus-staging/unicorn.pid)
 task bundle_custom: :environment do
   # queue "cd #{deploy_to}/current"
-  queue %[mkdir -p "/var/www/unichristus/shared/bundle"]
-  queue %[mkdir -p "./vendor"]
-  queue %[ln -s "/var/www/unichristus/shared/bundle" "./vendor/bundle"]
+  command %[mkdir -p "/var/www/unichristus/shared/bundle"]
+  command %[mkdir -p "./vendor"]
+  command %[ln -s "/var/www/unichristus/shared/bundle" "/var/www/unichristus/shared/vendor/bundle"]
 
-  queue "bundle install"
+  command "bundle install"
 
 end
 
 
 desc "Deploys the current version to the server."
 task :deploy => :environment do
-  to :before_hook do
+  # to :before_hook do
     # Put things to run locally before ssh
-  end
+  # end
   # uncomment this line to make sure you pushed your local branch to the remote origin
   # invoke :'git:ensure_pushed'
   deploy do
@@ -122,7 +122,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    # invoke :'bundle'
+    # invoke :'bundle_custom'
     invoke :'rails:db_migrate'
     # invoke :'rails:assets_precompile:force'
     # invoke :'webpacker:compile'

@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.4.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
@@ -67,5 +66,5 @@ gem 'simple_command'
 
 ## DEPLOY
 gem 'unicorn'
-gem 'mina', '0.3.8'
-gem 'mina-puma', '0.3.2', require: false
+gem 'mina'
+gem 'mina-puma'
