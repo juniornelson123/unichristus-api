@@ -3,6 +3,15 @@ class Api::WordsController < ApplicationController
 
   # GET /words
   # GET /words.json
+
+  def get_word_by_step
+    @words = Word.where(step: params[:step]).order(created_at: :desc).page params[:page]
+  end
+
+  def get_my_word_by_step
+    @words = Word.where(step: params[:step], user_id: current_user.id).order(created_at: :desc).page params[:page]
+  end
+
   def index
     if params[:study_case].present?
       @words = Word.where(kind: 0, study_case_id: params[:study_case], user_id: current_user.id).order(created_at: :desc).page params[:page]

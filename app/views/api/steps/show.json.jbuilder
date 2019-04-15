@@ -1,1 +1,1 @@
-json.partial! "steps/step", step: @step
+json.partial! "api/steps/step", step: @step

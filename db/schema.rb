@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_135921) do
+ActiveRecord::Schema.define(version: 2019_04_15_130037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2019_04_11_135921) do
     t.bigint "study_case_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "date_end"
     t.index ["study_case_id"], name: "index_steps_on_study_case_id"
   end
 
@@ -141,6 +142,8 @@ ActiveRecord::Schema.define(version: 2019_04_11_135921) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "step_id"
+    t.index ["step_id"], name: "index_words_on_step_id"
     t.index ["study_case_id"], name: "index_words_on_study_case_id"
     t.index ["user_id"], name: "index_words_on_user_id"
   end
@@ -161,6 +164,7 @@ ActiveRecord::Schema.define(version: 2019_04_11_135921) do
   add_foreign_key "steps", "study_cases"
   add_foreign_key "study_cases", "class_rooms"
   add_foreign_key "videos", "study_cases"
+  add_foreign_key "words", "steps"
   add_foreign_key "words", "study_cases"
   add_foreign_key "words", "users"
 end
