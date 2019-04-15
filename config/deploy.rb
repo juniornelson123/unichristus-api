@@ -27,7 +27,7 @@ set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log', 'tmp', '
 
 
 task :environment do
-  invoke :'rvm:use[ruby-2.4.1@default]'
+  # invoke :'rvm:use[ruby-2.4.1@default]'
   # command %{source ~/.rvm/scripts/rvm}
   # invoke :'rvm:use', 'ruby-2.4.1@default'
 end
