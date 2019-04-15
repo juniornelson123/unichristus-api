@@ -124,6 +124,7 @@ task :deploy => :environment do
     invoke :'bundle:install'
     # invoke :'bundle_custom'
     invoke :'rails:db_migrate'
+    invoke :'puma:hard_restart'
     # invoke :'rails:assets_precompile:force'
     # invoke :'webpacker:compile'
     # invoke :'webpack'
@@ -132,7 +133,6 @@ task :deploy => :environment do
 
 
     # to :launch do
-    #   invoke :'puma:hard_restart'
     #   # invoke :'sidekiq:restart'
     # end
   end
