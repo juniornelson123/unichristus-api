@@ -79,7 +79,9 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: unichristus-api_production
-  username: unichristus-api
-  password: <%= ENV['UNICHRISTUS-API_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  database: unichristus_production
+  pool: 5
+  username: deploy
+  password: junior123
