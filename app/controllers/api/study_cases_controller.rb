@@ -9,6 +9,10 @@ class Api::StudyCasesController < ApplicationController
       @class_rooms = current_user.class_rooms.pluck(:id)
     end
 
+    if current_user.role == "groups"
+      @class_rooms = current_user.group.class_room_id
+    end
+
     if params[:class_room_id].present?
       @study_cases = StudyCase.where(class_room_id: params[:class_room_id]).order(created_at: :desc).page params[:page]
     else

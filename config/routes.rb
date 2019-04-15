@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
     get 'student/mind_map_by/:id' => 'mind_maps#mind_map_by'
     get 'student/get_my_evaluation' => 'evaluations#get_my_evaluation'
+
+    get 'student/my_exercises' => 'exercises#my_exercises'
     
     get 'teacher/students' => 'users#students'
     get 'teacher/words/:study_case' => 'words#index_teacher'
