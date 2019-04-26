@@ -8,7 +8,6 @@ class StudyCase < ApplicationRecord
   has_many :images, dependent: :destroy
   has_many :videos, dependent: :destroy
   has_many :mind_maps, dependent: :destroy
-  has_many :exercises, dependent: :destroy
   has_many :steps, dependent: :destroy
   has_many :evaluations, dependent: :destroy
 
