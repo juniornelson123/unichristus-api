@@ -22,7 +22,7 @@ class Api::GroupsController < ApplicationController
   end
 
   def separe_groups
-    @limit = params[:count] || 8
+    @limit = params[:count] || 2  
     array_users = []
     count = 0
     group = 1
@@ -33,18 +33,19 @@ class Api::GroupsController < ApplicationController
     
     @user = User.create!(name: "Grupo #{group}", email: "grupo#{group}@#{@class_room.name.downcase.gsub(/\s+/, "")}.com", password: "grupo123", role: 2)
     @new_group = Group.create!(name: "Grupo #{group}", description: "Grupo #{group}", user_id: @user.id, class_room_id: @class_room_id)
-    GroupsUser.create(group_id: @new_group.id, user_id: @user.id)
     
     @users.each_with_index do |user, index|
       count = count + 1
       
       array_users << user
       if count >= @limit
+        @new_group.update! users: array_users
+        array_users = []
         count = 0
         @user = User.create!(name: "Grupo #{group}", email: "grupo#{group}@#{@class_room.name.downcase.gsub(/\s+/, "")}.com", password: "grupo123", role: 2)
         @new_group = Group.create!(name: "Grupo #{group}", description: "Grupo #{group}", user_id: @user.id, class_room_id: @class_room_id)
-        GroupsUser.create(group_id: @new_group.id, user_id: @user.id)
       end
+      
     end
     
     render json: { success: true }
