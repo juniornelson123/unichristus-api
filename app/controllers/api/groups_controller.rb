@@ -46,7 +46,7 @@ class Api::GroupsController < ApplicationController
         @user = User.create!(name: "Grupo #{group}", email: "grupo#{group}@#{@class_room.name.downcase.gsub(/\s+/, "")}.com", password: "grupo123", role: 2)
         @new_group = Group.create!(name: "Grupo #{group}", description: "Grupo #{group}", user_id: @user.id, class_room_id: @class_room_id)
       end
-
+      p "*****#{user.email}*******"
       GroupsUser.create!(user_id: user.id, group_id: @new_group.id)
       
     end
