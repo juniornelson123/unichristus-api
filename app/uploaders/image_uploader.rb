@@ -14,7 +14,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename 
-    "#{Time.now.strftime("%Y%m%d%S%M%H")}.#{model.logo.file.extension}"
+    "#{Time.now.strftime("%Y%m%d%S%M%H")}.png"
   end 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
