@@ -47,9 +47,7 @@ class Api::GroupsController < ApplicationController
         @new_group = Group.create!(name: "Grupo #{group}", description: "Grupo #{group}", user_id: @user.id, class_room_id: @class_room_id)
       end
 
-      array_users << user
-      @new_group.update! users: array_users
-      array_users = []
+      GroupsUser.create!(user_id: user.id, group_id: @new_group.id)
       
     end
     
