@@ -65,6 +65,10 @@ gem 'jwt'
 gem 'simple_command'
 
 ## DEPLOY
-gem 'unicorn'
-gem 'mina'
-gem 'mina-puma'
+# gem 'unicorn'
+# gem 'mina'
+# gem 'mina-puma'
+
+gem 'mina', '0.3.8'
+gem 'mina-puma', '0.3.2', require: false
+gem 'mina-sidekiq', '0.4.1'

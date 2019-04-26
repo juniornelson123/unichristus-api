@@ -28,9 +28,10 @@ class Api::GroupsController < ApplicationController
     group = 1
 
     @class_room_id = params[:class_room_id]
+    @class_room = ClassRoom.find @class_room_id 
     @users = User.joins(:class_rooms).where("class_rooms_users.class_room_id in (?) and users.role = ?", @class_room_id, 0)
     
-    @user = User.create!(name: "Grupo #{group}", email: "grupo#{group}@email.com", password: "grupo#{group}", role: 2)
+    @user = User.create!(name: "Grupo #{group}", email: "grupo#{group}@#{@class_room.name.downcase.gsub(/\s+/, "")}.com", password: "grupo#{group}", role: 2)
     @new_group = Group.create!(name: "Grupo #{group}", description: "Grupo #{group}", user_id: @user.id, class_room_id: @class_room_id)
     
     @users.each_with_index do |user, index|
@@ -39,7 +40,7 @@ class Api::GroupsController < ApplicationController
       array_users << user
       if count >= @limit
         count = 0
-        @user = User.create!(name: "Grupo #{group}", email: "grupo#{group}@email.com", password: "grupo1", role: 2)
+        @user = User.create!(name: "Grupo #{group}", email: "grupo#{group}@#{@class_room.name.downcase.gsub(/\s+/, "")}.com", password: "grupo1", role: 2)
         @new_group = Group.create!(name: "Grupo #{group}", description: "Grupo #{group}", user_id: @user.id, class_room_id: @class_room_id)
       end
     end
