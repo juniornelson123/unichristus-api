@@ -36,16 +36,20 @@ class Api::GroupsController < ApplicationController
     
     @users.each_with_index do |user, index|
       count = count + 1
-      group = group + 1
       
-      array_users << user
+      # array_users << user
+      # @new_group.update! users: array_users
+      # array_users = []
       if count >= @limit
-        @new_group.update! users: array_users
-        array_users = []
+        group = group + 1
         count = 0
         @user = User.create!(name: "Grupo #{group}", email: "grupo#{group}@#{@class_room.name.downcase.gsub(/\s+/, "")}.com", password: "grupo123", role: 2)
         @new_group = Group.create!(name: "Grupo #{group}", description: "Grupo #{group}", user_id: @user.id, class_room_id: @class_room_id)
       end
+
+      array_users << user
+      @new_group.update! users: array_users
+      array_users = []
       
     end
     
