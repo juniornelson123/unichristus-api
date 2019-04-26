@@ -36,6 +36,7 @@ class Api::GroupsController < ApplicationController
     
     @users.each_with_index do |user, index|
       count = count + 1
+      group = group + 1
       
       array_users << user
       if count >= @limit
